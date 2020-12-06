@@ -7,13 +7,6 @@ const app = express();
 const server = http.createServer(app);
 
 
-// catch all
-app.get('*', (req, res) => {
-    res.status(404).send(`
-      <h1>Page not found</h1>
-    `);
-});
-
 
 
 // home page
@@ -25,14 +18,28 @@ app.get('/', (req, res) => {
 });
 
 app.get('/hello', (req, res) => {
-    req.send('Hello!');
+    res.send(`
+    <h1>HELLO WORLD</h1>
+    <p>Welcome to this awesome site!</p>
+    <p>Where would you like to go?</p>
+    <ul>
+        <li><a href='/hello/Ian'>Ian</a></li>
+        <li><a href='/hello/Molly'>Molly</a></li>
+        <li><a href='/hello/Sasha'>Sasha</a></li>
+    </ul>
+    `);
 });
 
 app.get('/hello/:whom', (req, res) => {
     const whom = req.params.whom;
-    res.send(`Hello, {whom}!`);
+    res.send(`Hello, ${whom}!`);
 });
-
+// catch all
+app.get('*', (req, res) => {
+    res.status(404).send(`
+      <h1>Page not found</h1>
+    `);
+});
 server.listen(PORT, HOST, () => {
     console.log(`Running on http://${HOST}:${PORT}/`);
 });
